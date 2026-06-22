@@ -76,9 +76,9 @@ function srclist.refresh()
 	local found: { ModuleScript } = {}
 
 	for _, root in SCAN_ROOTS do
-		for _, descendant in root:GetDescendants() do
+		for _, descendant in root:QueryDescendants("ModuleScript") do
 			if isBuildScript(descendant) and not isInsidePluginSource(descendant) then
-				found[#found + 1] = descendant :: ModuleScript
+				table.insert(found, descendant)
 			end
 		end
 	end
@@ -94,7 +94,7 @@ function srclist.refresh()
 			end
 		end
 		if isRoot then
-			entries[#entries + 1] = toEntry(candidate)
+			table.insert(entries, toEntry(candidate))
 		end
 	end
 
